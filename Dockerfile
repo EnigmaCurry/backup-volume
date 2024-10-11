@@ -4,8 +4,12 @@
 FROM golang:1.23-alpine as builder
 
 WORKDIR /app
+
+## Cache dependencies:
 COPY go.mod go.sum ./
 RUN go mod download
+
+# Copy and build source files:
 COPY . .
 WORKDIR /app/cmd/backup
 RUN go build -o backup .

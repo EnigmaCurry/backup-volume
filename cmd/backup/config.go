@@ -46,6 +46,10 @@ type Config struct {
 	BackupFromSnapshot            bool            `split_words:"true"`
 	BackupExcludeRegexp           RegexpDecoder   `split_words:"true"`
 	BackupSkipBackendsFromPrune   []string        `split_words:"true"`
+	BackupLifecyclePhaseArchive   bool            `split_words:"true" default:"true"`
+	BackupLifecyclePhaseProcess   bool            `split_words:"true" default:"true"`
+	BackupLifecyclePhaseCopy      bool            `split_words:"true" default:"true"`
+	BackupLifecyclePhasePrune     bool            `split_words:"true" default:"true"`
 	GpgPassphrase                 string          `split_words:"true"`
 	GpgPublicKeyRing              string          `split_words:"true"`
 	AgePassphrase                 string          `split_words:"true"`
