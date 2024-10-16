@@ -15,7 +15,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     volumes:
       - data:/backup/my-app-backup:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

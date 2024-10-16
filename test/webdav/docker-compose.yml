@@ -9,7 +9,7 @@ services:
       - webdav_backup_data:/var/lib/dav
 
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION:-canary}
+    image: enigmacurry/backup-volume:${TEST_VERSION:-canary}
     hostname: hostnametoken
     depends_on:
       - webdav
@@ -30,12 +30,12 @@ services:
       - app_data:/backup/app_data:ro
       - /var/run/docker.sock:/var/run/docker.sock
 
-  offen:
-    image: offen/offen:latest
+  enigmacurry:
+    image: enigmacurry/enigmacurry:latest
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
     volumes:
-      - app_data:/var/opt/offen
+      - app_data:/var/opt/enigmacurry
 
 volumes:
   webdav_backup_data:

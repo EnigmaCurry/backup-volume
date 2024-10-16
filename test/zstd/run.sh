@@ -12,10 +12,10 @@ docker volume create app_data
 LOCAL_DIR=$(mktemp -d)
 
 docker run -d -q \
-  --name offen \
+  --name enigmacurry \
   --network test_network \
-  -v app_data:/var/opt/offen/ \
-  offen/offen:latest
+  -v app_data:/var/opt/enigmacurry/ \
+  enigmacurry/enigmacurry:latest
 
 sleep 10
 
@@ -27,11 +27,11 @@ docker run --rm -q \
   --env BACKUP_COMPRESSION=zst \
   --env BACKUP_FILENAME='test.{{ .Extension }}' \
   --entrypoint backup \
-  offen/docker-volume-backup:${TEST_VERSION:-canary}
+  enigmacurry/backup-volume:${TEST_VERSION:-canary}
 
 tmp_dir=$(mktemp -d)
 tar -xvf "$LOCAL_DIR/test.tar.zst" --zstd -C $tmp_dir
-if [ ! -f "$tmp_dir/backup/app_data/offen.db" ]; then
+if [ ! -f "$tmp_dir/backup/app_data/enigmacurry.db" ]; then
   fail "Could not find expected file in untared archive."
 fi
 pass "Found relevant files in untared local backup."

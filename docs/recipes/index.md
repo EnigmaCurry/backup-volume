@@ -20,7 +20,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
@@ -41,7 +41,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_ENDPOINT: s3.filebase.com
       AWS_S3_BUCKET_NAME: filebase-bucket
@@ -63,7 +63,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_ENDPOINT: minio.example.com
       AWS_S3_BUCKET_NAME: backup-bucket
@@ -86,7 +86,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_ENDPOINT: minio.example.com
       AWS_S3_BUCKET_NAME: backup-bucket
@@ -117,7 +117,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       WEBDAV_URL: https://webdav.mydomain.me
       WEBDAV_PATH: /my/directory/
@@ -139,7 +139,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       SSH_HOST_NAME: server.local
       SSH_PORT: 2222
@@ -162,7 +162,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AZURE_STORAGE_CONTAINER_NAME: backup-container
       AZURE_STORAGE_ACCOUNT_NAME: account-name
@@ -185,7 +185,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       DROPBOX_REFRESH_TOKEN: REFRESH_KEY  # replace
       DROPBOX_APP_KEY: APP_KEY  # replace
@@ -207,7 +207,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.tar.gz
       BACKUP_LATEST_SYMLINK: backup-latest.tar.gz
@@ -228,7 +228,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
@@ -250,7 +250,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       # take a backup on every hour
       BACKUP_CRON_EXPRESSION: "0 * * * *"
@@ -273,7 +273,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
@@ -297,7 +297,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
@@ -319,7 +319,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
@@ -347,11 +347,11 @@ services:
   database:
     image: mariadb:latest
     labels:
-      - docker-volume-backup.archive-pre=/bin/sh -c 'mysqldump -psecret --all-databases > /tmp/dumps/dump.sql'
+      - backup-volume.archive-pre=/bin/sh -c 'mysqldump -psecret --all-databases > /tmp/dumps/dump.sql'
     volumes:
       - data:/tmp/dumps
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       BACKUP_FILENAME: db.tar.gz
       BACKUP_CRON_EXPRESSION: "0 2 * * *"
@@ -372,13 +372,13 @@ version: '3'
 services:
   # ... define other services using the `data_1` and `data_2` volumes here
   backup_1: &backup_service
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment: &backup_environment
       BACKUP_CRON_EXPRESSION: "0 2 * * *"
       AWS_S3_BUCKET_NAME: backup-bucket
       AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
       AWS_SECRET_ACCESS_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-      # Label the container using the `data_1` volume as `docker-volume-backup.stop-during-backup=service1`
+      # Label the container using the `data_1` volume as `backup-volume.stop-during-backup=service1`
       BACKUP_STOP_DURING_BACKUP_LABEL: service1
     volumes:
       - data_1:/backup/data-1-backup:ro
@@ -387,7 +387,7 @@ services:
     <<: *backup_service
     environment:
       <<: *backup_environment
-      # Label the container using the `data_2` volume as `docker-volume-backup.stop-during-backup=service2`
+      # Label the container using the `data_2` volume as `backup-volume.stop-during-backup=service2`
       BACKUP_CRON_EXPRESSION: "0 3 * * *"
       BACKUP_STOP_DURING_BACKUP_LABEL: service2
     volumes:
@@ -407,7 +407,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     user: 1000:1000
     environment:
       AWS_S3_BUCKET_NAME: backup-bucket

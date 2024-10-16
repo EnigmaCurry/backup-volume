@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/joho/godotenv"
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 	"github.com/offen/envconfig"
 	shell "mvdan.cc/sh/v3/shell"
 )

@@ -20,7 +20,7 @@ import (
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/api/types/system"
 	"github.com/docker/docker/client"
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 )
 
 func scaleService(cli *client.Client, serviceID string, replicas uint64) ([]string, error) {
@@ -121,7 +121,7 @@ func (s *script) stopContainersAndServices() (func() error, error) {
 	}
 
 	filterMatchLabel := fmt.Sprintf(
-		"docker-volume-backup.stop-during-backup=%s",
+		"backup-volume.stop-during-backup=%s",
 		labelValue,
 	)
 
@@ -182,7 +182,7 @@ func (s *script) stopContainersAndServices() (func() error, error) {
 					return noop, errwrap.Wrap(err, fmt.Sprintf("error querying for parent service with ID %s", swarmServiceID))
 				}
 				for label := range parentService.Spec.Labels {
-					if label == "docker-volume-backup.stop-during-backup" {
+					if label == "backup-volume.stop-during-backup" {
 						return noop, errwrap.Wrap(
 							nil,
 							fmt.Sprintf(

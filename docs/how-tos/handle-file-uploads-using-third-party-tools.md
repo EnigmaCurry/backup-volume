@@ -12,12 +12,12 @@ If you want to use an unsupported storage backend, or want to use a third party 
 For example, if you wanted to use `rsync`, define your Docker image like this:
 
 ```Dockerfile
-FROM offen/docker-volume-backup:v2
+FROM enigmacurry/backup-volume:v2
 
 RUN apk add rsync
 ```
 
-Using this image, you can now omit configuring any of the supported storage backends, and instead define your own mechanism in a `docker-volume-backup.copy-post` label:
+Using this image, you can now omit configuring any of the supported storage backends, and instead define your own mechanism in a `backup-volume.copy-post` label:
 
 ```yml
 version: '3'
@@ -30,7 +30,7 @@ services:
       BACKUP_FILENAME: "daily-backup-%Y-%m-%dT%H-%M-%S.tar.gz"
       BACKUP_CRON_EXPRESSION: "0 2 * * *"
     labels:
-      - docker-volume-backup.copy-post=/bin/sh -c 'rsync $$COMMAND_RUNTIME_ARCHIVE_FILEPATH /destination'
+      - backup-volume.copy-post=/bin/sh -c 'rsync $$COMMAND_RUNTIME_ARCHIVE_FILEPATH /destination'
     volumes:
       - app_data:/backup/app_data:ro
       - /var/run/docker.sock:/var/run/docker.sock

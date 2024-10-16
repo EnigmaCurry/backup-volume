@@ -1,8 +1,8 @@
-title: docker-volume-backup
-description: Documentation for the offen/docker-volume-backup Docker image.
+title: backup-volume
+description: Documentation for the enigmacurry/backup-volume Docker image.
 theme: just-the-docs
 
-url: https://offen.github.io/docker-volume-backup/
+url: https://enigmacurry.github.io/backup-volume/
 
 callouts_level: quiet
 callouts:
@@ -23,13 +23,13 @@ callouts:
 
 aux_links:
   'GitHub Repository':
-    - https://github.com/offen/docker-volume-backup
+    - https://github.com/enigmacurry/backup-volume
 
 nav_external_links:
   - title: GitHub Repository
-    url: https://github.com/offen/docker-volume-backup
+    url: https://github.com/enigmacurry/backup-volume
 
 footer_content: >-
-  Copyright &copy; 2024 <a target="_blank" href="https://www.offen.software">offen.software</a> and contributors.
-  Distributed under the <a href="https://github.com/offen/docker-volume-backup/tree/main/LICENSE">MPL-2.0 License.</a><br>
-  Something missing, unclear or not working? Open <a href="https://github.com/offen/docker-volume-backup/issues">an issue</a>.
+  Copyright &copy; 2024 <a target="_blank" href="https://www.enigmacurry.software">enigmacurry.software</a> and contributors.
+  Distributed under the <a href="https://github.com/enigmacurry/backup-volume/tree/main/LICENSE">MPL-2.0 License.</a><br>
+  Something missing, unclear or not working? Open <a href="https://github.com/enigmacurry/backup-volume/issues">an issue</a>.

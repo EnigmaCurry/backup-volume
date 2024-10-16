@@ -38,6 +38,6 @@ expect_running_containers "3"
 docker run --rm \
   -v minio_backup_data:/minio_data \
   alpine \
-  ash -c 'tar -xvf /minio_data/backup/test.tar.gz -C /tmp && test -f /tmp/backup/app_data/offen.db'
+  ash -c 'tar -xvf /minio_data/backup/test.tar.gz -C /tmp && test -f /tmp/backup/app_data/enigmacurry.db'
 
 pass "Found relevant files in untared remote backups."

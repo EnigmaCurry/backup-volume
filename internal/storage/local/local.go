@@ -12,8 +12,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/offen/docker-volume-backup/internal/errwrap"
-	"github.com/offen/docker-volume-backup/internal/storage"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/storage"
 )
 
 type localStorage struct {

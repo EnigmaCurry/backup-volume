@@ -12,7 +12,7 @@ In case you are running Docker in Swarm mode, [dedicated documentation](./use-wi
 
 In many cases, it will be desirable to stop the services that are consuming the volume you want to backup in order to ensure data integrity.
 This image can automatically stop and restart containers and services.
-By default, any container that is labeled `docker-volume-backup.stop-during-backup=true` will be stopped before the backup is being taken and restarted once it has finished.
+By default, any container that is labeled `backup-volume.stop-during-backup=true` will be stopped before the backup is being taken and restarted once it has finished.
 
 In case you need more fine grained control about which containers should be stopped (e.g. when backing up multiple volumes on different schedules), you can set the `BACKUP_STOP_DURING_BACKUP_LABEL` environment variable and then use the same value for labeling:
 
@@ -23,10 +23,10 @@ services:
   app:
     # definition for app ...
     labels:
-      - docker-volume-backup.stop-during-backup=service1
+      - backup-volume.stop-during-backup=service1
 
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       BACKUP_STOP_DURING_BACKUP_LABEL: service1
     volumes:

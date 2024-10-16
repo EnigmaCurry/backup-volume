@@ -8,7 +8,7 @@ current_test=$(basename $(pwd))
 
 export KEY_DIR=$(mktemp -d)
 
-ssh-keygen -t rsa -m pem -b 4096 -N "test1234" -f "$KEY_DIR/id_rsa" -C "docker-volume-backup@local"
+ssh-keygen -t rsa -m pem -b 4096 -N "test1234" -f "$KEY_DIR/id_rsa" -C "backup-volume@local"
 
 docker compose up -d --quiet-pull
 sleep 5
@@ -22,7 +22,7 @@ expect_running_containers 3
 docker run --rm \
   -v ssh_backup_data:/ssh_data \
   alpine \
-  ash -c 'tar -xvf /ssh_data/test-hostnametoken.tar.gz -C /tmp && test -f /tmp/backup/app_data/offen.db'
+  ash -c 'tar -xvf /ssh_data/test-hostnametoken.tar.gz -C /tmp && test -f /tmp/backup/app_data/enigmacurry.db'
 
 pass "Found relevant files in decrypted and untared remote backups."
 

@@ -1,10 +1,10 @@
 {{ define "title_failure" -}}
-Failure running docker-volume-backup at {{ .Stats.StartTime | formatTime }}
+Failure running backup-volume at {{ .Stats.StartTime | formatTime }}
 {{- end }}
 
 
 {{ define "body_failure" -}}
-Running docker-volume-backup failed with error: {{ .Error }}
+Running backup-volume failed with error: {{ .Error }}
 
 Log output of the failed run was:
 
@@ -13,12 +13,12 @@ Log output of the failed run was:
 
 
 {{ define "title_success" -}}
-Success running docker-volume-backup at {{ .Stats.StartTime | formatTime }}
+Success running backup-volume at {{ .Stats.StartTime | formatTime }}
 {{- end }}
 
 
 {{ define "body_success" -}}
-Running docker-volume-backup succeeded.
+Running backup-volume succeeded.
 
 Log output was:
 

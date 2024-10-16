@@ -20,11 +20,11 @@ services:
       - data:/var/my_app
       - backup:/tmp/backup
     labels:
-      - docker-volume-backup.archive-pre=cp -r /var/my_app /tmp/backup/my-app
-      - docker-volume-backup.archive-post=rm -rf /tmp/backup/my-app
+      - backup-volume.archive-pre=cp -r /var/my_app /tmp/backup/my-app
+      - backup-volume.archive-post=rm -rf /tmp/backup/my-app
 
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       BACKUP_SOURCES: /tmp/backup
     volumes:

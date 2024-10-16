@@ -19,7 +19,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/pkg/stdcopy"
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -93,7 +93,7 @@ func (s *script) runLabeledCommands(label string) error {
 	if s.c.ExecLabel != "" {
 		f = append(f, filters.KeyValuePair{
 			Key:   "label",
-			Value: fmt.Sprintf("docker-volume-backup.exec-label=%s", s.c.ExecLabel),
+			Value: fmt.Sprintf("backup-volume.exec-label=%s", s.c.ExecLabel),
 		})
 	}
 	containersWithCommand, err := s.cli.ContainerList(context.Background(), container.ListOptions{
@@ -104,10 +104,10 @@ func (s *script) runLabeledCommands(label string) error {
 	}
 
 	var hasDeprecatedContainers bool
-	if label == "docker-volume-backup.archive-pre" {
+	if label == "backup-volume.archive-pre" {
 		f[0] = filters.KeyValuePair{
 			Key:   "label",
-			Value: "docker-volume-backup.exec-pre",
+			Value: "backup-volume.exec-pre",
 		}
 		deprecatedContainers, err := s.cli.ContainerList(context.Background(), container.ListOptions{
 			Filters: filters.NewArgs(f...),
@@ -121,10 +121,10 @@ func (s *script) runLabeledCommands(label string) error {
 		}
 	}
 
-	if label == "docker-volume-backup.archive-post" {
+	if label == "backup-volume.archive-post" {
 		f[0] = filters.KeyValuePair{
 			Key:   "label",
-			Value: "docker-volume-backup.exec-post",
+			Value: "backup-volume.exec-post",
 		}
 		deprecatedContainers, err := s.cli.ContainerList(context.Background(), container.ListOptions{
 			Filters: filters.NewArgs(f...),
@@ -144,7 +144,7 @@ func (s *script) runLabeledCommands(label string) error {
 
 	if hasDeprecatedContainers {
 		s.logger.Warn(
-			"Using `docker-volume-backup.exec-pre` and `docker-volume-backup.exec-post` labels has been deprecated and will be removed in the next major version.",
+			"Using `backup-volume.exec-pre` and `backup-volume.exec-post` labels has been deprecated and will be removed in the next major version.",
 		)
 		s.logger.Warn(
 			"Please use other `-pre` and `-post` labels instead. Refer to the README for an upgrade guide.",
@@ -157,10 +157,10 @@ func (s *script) runLabeledCommands(label string) error {
 		c := container
 		g.Go(func() error {
 			cmd, ok := c.Labels[label]
-			if !ok && label == "docker-volume-backup.archive-pre" {
-				cmd = c.Labels["docker-volume-backup.exec-pre"]
-			} else if !ok && label == "docker-volume-backup.archive-post" {
-				cmd = c.Labels["docker-volume-backup.exec-post"]
+			if !ok && label == "backup-volume.archive-pre" {
+				cmd = c.Labels["backup-volume.exec-pre"]
+			} else if !ok && label == "backup-volume.archive-post" {
+				cmd = c.Labels["backup-volume.exec-post"]
 			}
 
 			userLabelName := fmt.Sprintf("%s.user", label)
@@ -199,12 +199,12 @@ func (s *script) withLabeledCommands(step lifecyclePhase, cb func() error) func(
 		return cb
 	}
 	return func() (err error) {
-		if err = s.runLabeledCommands(fmt.Sprintf("docker-volume-backup.%s-pre", step)); err != nil {
+		if err = s.runLabeledCommands(fmt.Sprintf("backup-volume.%s-pre", step)); err != nil {
 			err = errwrap.Wrap(err, fmt.Sprintf("error running %s-pre commands", step))
 			return
 		}
 		defer func() {
-			if derr := s.runLabeledCommands(fmt.Sprintf("docker-volume-backup.%s-post", step)); derr != nil {
+			if derr := s.runLabeledCommands(fmt.Sprintf("backup-volume.%s-post", step)); derr != nil {
 				err = errors.Join(err, errwrap.Wrap(derr, fmt.Sprintf("error running %s-post commands", step)))
 			}
 		}()

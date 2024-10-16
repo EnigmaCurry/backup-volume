@@ -26,10 +26,10 @@ docker run -d -q \
 docker exec minio mkdir -p /data/backup
 
 docker run -d -q \
-  --name offen \
+  --name enigmacurry \
   --network test_network \
-  -v app_data:/var/opt/offen/ \
-  offen/offen:latest
+  -v app_data:/var/opt/enigmacurry/ \
+  enigmacurry/enigmacurry:latest
 
 sleep 10
 
@@ -46,11 +46,11 @@ docker run --rm -q \
   --env BACKUP_FILENAME=test.tar.gz \
   --env "BACKUP_FROM_SNAPSHOT=true" \
   --entrypoint backup \
-  offen/docker-volume-backup:${TEST_VERSION:-canary}
+  enigmacurry/backup-volume:${TEST_VERSION:-canary}
 
 docker run --rm -q \
   -v backup_data:/data alpine \
-  ash -c 'tar -xvf /data/backup/test.tar.gz && test -f /backup/app_data/offen.db && test -d /backup/empty_data'
+  ash -c 'tar -xvf /data/backup/test.tar.gz && test -f /backup/app_data/enigmacurry.db && test -d /backup/empty_data'
 
 pass "Found relevant files in untared remote backup."
 
@@ -58,6 +58,6 @@ pass "Found relevant files in untared remote backup."
 # purpose in order to cover this setup as well.
 expect_running_containers "2"
 
-docker rm $(docker stop minio offen)
+docker rm $(docker stop minio enigmacurry)
 docker volume rm backup_data app_data
 docker network rm test_network

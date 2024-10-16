@@ -19,7 +19,7 @@ version: '3'
 services:
   # ... define other services using the `data` volume here
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.tar.gz
       BACKUP_PRUNING_PREFIX: backup-

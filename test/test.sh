@@ -20,13 +20,13 @@ finish () {
   fi
 }
 
-docker build -t offen/docker-volume-backup:test-sandbox .
+docker build -t enigmacurry/backup-volume:test-sandbox .
 
 if [ ! -z "$BUILD_IMAGE" ]; then
-  docker build -t offen/docker-volume-backup:$IMAGE_TAG $(dirname $(pwd))
+  docker build -t enigmacurry/backup-volume:$IMAGE_TAG $(dirname $(pwd))
 fi
 
-docker save offen/docker-volume-backup:$IMAGE_TAG -o $tarball
+docker save enigmacurry/backup-volume:$IMAGE_TAG -o $tarball
 
 find_args="-mindepth 1 -maxdepth 1 -type d"
 if [ ! -z "$MATCH_PATTERN" ]; then
@@ -53,7 +53,7 @@ for dir in $(find $find_args | sort); do
       -v "${sandbox}_overlay2":/var/lib/docker/overlay2"
   fi
 
-  docker run $docker_run_args offen/docker-volume-backup:test-sandbox
+  docker run $docker_run_args enigmacurry/backup-volume:test-sandbox
 
   retry_counter=0
   until timeout 5 docker exec $sandbox /bin/sh -c 'docker info' > /dev/null 2>&1; do
@@ -64,7 +64,7 @@ for dir in $(find $find_args | sort); do
 
     if [ "$(docker inspect $sandbox --format '{{ .State.Running }}')" = "false" ]; then
       docker rm $sandbox
-      docker run $docker_run_args offen/docker-volume-backup:test-sandbox
+      docker run $docker_run_args enigmacurry/backup-volume:test-sandbox
     fi
 
     sleep 0.5

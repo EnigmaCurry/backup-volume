@@ -16,7 +16,7 @@ version: '3'
 
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     environment:
       # ... other configuration values go here
       NOTIFICATION_URLS=smtp://me:secret@smtp.example.com:587/?fromAddress=no-reply@example.com&toAddresses=you@example.com
@@ -38,7 +38,7 @@ Template sources must be mounted inside the container in `/etc/dockervolumebacku
 ```yml
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     volumes:
       - ./customized.template:/etc/dockervolumebackup/notifications.d/01.template
 ```

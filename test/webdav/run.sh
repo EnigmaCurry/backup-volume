@@ -18,7 +18,7 @@ expect_running_containers "3"
 docker run --rm \
   -v webdav_backup_data:/webdav_data \
   alpine \
-  ash -c 'tar -xvf /webdav_data/data/my/new/path/test-hostnametoken.tar.gz -C /tmp && test -f /tmp/backup/app_data/offen.db'
+  ash -c 'tar -xvf /webdav_data/data/my/new/path/test-hostnametoken.tar.gz -C /tmp && test -f /tmp/backup/app_data/enigmacurry.db'
 
 pass "Found relevant files in untared remote backup."
 

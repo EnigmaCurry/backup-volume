@@ -16,7 +16,7 @@ version: '3'
 
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     volumes:
       - data:/backup/my-app-backup:ro
       - /etc/timezone:/etc/timezone:ro

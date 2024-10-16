@@ -29,7 +29,7 @@ download_az "test"
 
 tar -xvf "$LOCAL_DIR/test.tar.gz" -C $TMP_DIR
 
-if [ ! -f "$TMP_DIR/backup/app_data/offen.db" ]; then
+if [ ! -f "$TMP_DIR/backup/app_data/enigmacurry.db" ]; then
   fail "Could not find expeced file in untared backup"
 fi
 

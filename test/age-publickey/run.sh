@@ -27,7 +27,7 @@ do_decrypt() {
   age --decrypt -i "$1" -o "$LOCAL_DIR/decrypted.tar.gz" "$LOCAL_DIR/test.tar.gz.age"
   tar -xf "$LOCAL_DIR/decrypted.tar.gz" -C "$TMP_DIR"
 
-  if [ ! -f "$TMP_DIR/backup/app_data/offen.db" ]; then
+  if [ ! -f "$TMP_DIR/backup/app_data/enigmacurry.db" ]; then
     fail "Could not find expected file in untared archive."
   fi
   rm -vf "$LOCAL_DIR/decrypted.tar.gz"

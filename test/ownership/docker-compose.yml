@@ -3,7 +3,7 @@ services:
     image: postgres:14-alpine
     restart: unless-stopped
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -12,7 +12,7 @@ services:
       POSTGRES_DB: test
 
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION}
+    image: enigmacurry/backup-volume:${TEST_VERSION}
     restart: always
     environment:
       BACKUP_FILENAME: backup.tar.gz

@@ -15,8 +15,8 @@ export PASSPHRASE="test"
 gpg --batch --gen-key <<EOF
 Key-Type: RSA
 Key-Length: 4096
-Name-Real: offen
-Name-Email: docker-volume-backup@local
+Name-Real: enigmacurry
+Name-Email: backup-volume@local
 Expire-Date: 0
 Passphrase: $PASSPHRASE
 %commit
@@ -37,7 +37,7 @@ gpg -d --pinentry-mode loopback --yes --passphrase $PASSPHRASE "$LOCAL_DIR/test.
 
 tar -xf "$LOCAL_DIR/decrypted.tar.gz" -C $TMP_DIR
 
-if [ ! -f $TMP_DIR/backup/app_data/offen.db ]; then
+if [ ! -f $TMP_DIR/backup/app_data/enigmacurry.db ]; then
   fail "Could not find expected file in untared archive."
 fi
 rm "$LOCAL_DIR/decrypted.tar.gz"

@@ -9,9 +9,9 @@ services:
       MARIADB_DATABASE: backup
     labels:
       # this is testing the deprecated label on purpose
-      - docker-volume-backup.exec-pre=/bin/sh -c 'mysqldump -ptest --all-databases > /tmp/volume/dump.sql'
-      - docker-volume-backup.copy-post=/bin/sh -c 'echo "post" > /tmp/volume/post.txt'
-      - docker-volume-backup.exec-label=test
+      - backup-volume.exec-pre=/bin/sh -c 'mysqldump -ptest --all-databases > /tmp/volume/dump.sql'
+      - backup-volume.copy-post=/bin/sh -c 'echo "post" > /tmp/volume/post.txt'
+      - backup-volume.exec-label=test
     volumes:
       - app_data:/tmp/volume
 
@@ -24,13 +24,13 @@ services:
       MARIADB_ROOT_PASSWORD: test
       MARIADB_DATABASE: backup
     labels:
-      - docker-volume-backup.archive-pre=touch /tmp/volume/not-relevant.txt
-      - docker-volume-backup.exec-label=not-relevant
+      - backup-volume.archive-pre=touch /tmp/volume/not-relevant.txt
+      - backup-volume.exec-label=not-relevant
     volumes:
       - app_data:/tmp/volume
 
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION:-canary}
+    image: enigmacurry/backup-volume:${TEST_VERSION:-canary}
     deploy:
       restart_policy:
         condition: on-failure

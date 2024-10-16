@@ -10,7 +10,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 	"github.com/robfig/cron/v3"
 )
 
@@ -30,6 +30,7 @@ func newCommand() *command {
 // runAsCommand executes a backup run for each configuration that is available
 // and then returns
 func (c *command) runAsCommand() error {
+	fmt.Printf("Running command ...")
 	configurations, err := sourceConfiguration(configStrategyEnv)
 	if err != nil {
 		return errwrap.Wrap(err, "error loading env vars")
@@ -130,6 +131,11 @@ func (c *command) schedule(strategy configStrategy) error {
 		if ok := checkCronSchedule(config.BackupCronExpression); !ok {
 			c.logger.Warn(
 				fmt.Sprintf("Scheduled cron expression %s will never run, is this intentional?", config.BackupCronExpression),
+			)
+		}
+		if description, ok := explainCronExpression(config.BackupCronExpression, "en"); ok {
+			c.logger.Info(
+				fmt.Sprintf("The backup will start %s", description),
 			)
 		}
 		c.schedules = append(c.schedules, id)

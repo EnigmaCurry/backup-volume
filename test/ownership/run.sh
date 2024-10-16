@@ -1,5 +1,5 @@
 #!/bin/sh
-# This test refers to https://github.com/offen/docker-volume-backup/issues/71
+# This test refers to https://github.com/enigmacurry/backup-volume/issues/71
 
 set -e
 

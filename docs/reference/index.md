@@ -353,7 +353,7 @@ You can populate below template according to your requirements and use it as you
 ########### STOPPING CONTAINERS AND SERVICES DURING BACKUP
 
 # Containers or services can be stopped by applying a
-# `docker-volume-backup.stop-during-backup` label. By default, all containers and
+# `backup-volume.stop-during-backup` label. By default, all containers and
 # services that are labeled with `true` will be stopped. If you need more fine
 # grained control (e.g. when running multiple containers based on this image),
 # you can override this default by specifying a different value here.
@@ -371,7 +371,7 @@ You can populate below template according to your requirements and use it as you
 
 # It is possible to define commands to be run in any container before and after
 # a backup is conducted. The commands themselves are defined in labels like
-# `docker-volume-backup.archive-pre=/bin/sh -c 'mysqldump [options] > dump.sql'.
+# `backup-volume.archive-pre=/bin/sh -c 'mysqldump [options] > dump.sql'.
 # Several options exist for controlling this feature:
 
 # By default, any output of such a command is suppressed. If this value
@@ -384,7 +384,7 @@ You can populate below template according to your requirements and use it as you
 # run before and after a backup. If you need more fine grained control, you
 # can use this option to set a label that will be used for narrowing down
 # the set of eligible containers. When set, an eligible container will also need
-# to be labeled as `docker-volume-backup.exec-label=database`.
+# to be labeled as `backup-volume.exec-label=database`.
 
 # EXEC_LABEL="database"
 

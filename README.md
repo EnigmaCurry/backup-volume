@@ -1,21 +1,12 @@
-<a href="https://www.offen.software/">
-    <img src="https://offen.github.io/press-kit/avatars/avatar-OS-header.svg" alt="offen.software logo" title="offen.software" width="60px"/>
-</a>
+# backup-volume
 
-# docker-volume-backup
+Backup Docker volumes locally or to any S3, WebDAV, Azure Blob
+Storage, Dropbox or SSH compatible storage.
 
-Backup Docker volumes locally or to any S3, WebDAV, Azure Blob Storage, Dropbox or SSH compatible storage.
-
-The [offen/docker-volume-backup](https://hub.docker.com/r/offen/docker-volume-backup) Docker image can be used as a lightweight (below 15MB) companion container to an existing Docker setup.
-It handles __recurring or one-off backups of Docker volumes__ to a __local directory__, __any S3, WebDAV, Azure Blob Storage, Dropbox or SSH compatible storage (or any combination thereof) and rotates away old backups__ if configured. It also supports __encrypting your backups using GPG__ and __sending notifications for (failed) backup runs__.
-
-Documentation is found at <https://offen.github.io/docker-volume-backup>
-  - [Quickstart](https://offen.github.io/docker-volume-backup)
-  - [Configuration Reference](https://offen.github.io/docker-volume-backup/reference/)
-  - [How Tos](https://offen.github.io/docker-volume-backup/how-tos/)
-  - [Recipes](https://offen.github.io/docker-volume-backup/recipes/)
-
----
+`backup-volume` is a fork of
+[offen/docker-volume-backup](https://github.com/offen/docker-volume-backup)
+Copyright &copy; 2024 [offen.software](https://www.offen.software) and
+contributors. Distributed under the [MPL-2.0 License](LICENSE).
 
 ## Quickstart
 
@@ -36,14 +27,10 @@ services:
       # This means the container will be stopped during backup to ensure
       # backup integrity. You can omit this label if stopping during backup
       # not required.
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
 
   backup:
-    # In production, it is advised to lock your image tag to a proper
-    # release version instead of using `latest`.
-    # Check https://github.com/offen/docker-volume-backup/releases
-    # for a list of available releases.
-    image: offen/docker-volume-backup:latest
+    image: ghcr.io/enigmacurry/backup-volume:v3
     restart: always
     env_file: ./backup.env # see below for configuration reference
     volumes:
@@ -73,12 +60,50 @@ docker run --rm \
   --env AWS_SECRET_ACCESS_KEY="<xxx>" \
   --env AWS_S3_BUCKET_NAME="<xxx>" \
   --entrypoint backup \
-  offen/docker-volume-backup:v2
+  enigmacurry/backup-volume:v3
 ```
 
 Alternatively, pass a `--env-file` in order to use a full config as described below.
 
----
+## New features
 
-Copyright &copy; 2024 <a target="_blank" href="https://www.offen.software">offen.software</a> and contributors.
-Distributed under the <a href="https://github.com/offen/docker-volume-backup/tree/main/LICENSE">MPL-2.0 License</a>.
+These features have since been added in this version, compared to
+docker-volume-backup:
+
+### Plain language explanation for cron expressions
+
+The new log message will confirm you got your cron expression correct
+by explaining it back to you:
+
+```
+time=2024-10-10T20:20:32.828Z level=INFO msg="Successfully scheduled backup from environment with expression 11 1 */2 * MON-WED"
+time=2024-10-10T20:20:32.829Z level=INFO msg="The backup will start at 01:11 AM, every 2 days, Monday through Wednesday"
+```
+
+### Environment vars for disabling archive lifecycle
+
+There are certain advantages and disadvantages to the way that
+backup-volume does backups:
+
+ * Archives are always full backups, not incremental.
+ * Theres no way to turn off the creation of the tarballs. If you turn
+   off archives and storage, the tarballs are still created into /tmp
+   even if they are not saved anywhere else (and then immediately
+   deleted).
+ 
+You can now use the following environment variables to disable the
+archive lifecycles:
+
+ * `BACKUP_LIFECYCLE_PHASE_ARCHIVE=true` - enables/disables the
+   creation of a new tarball backup archive. This has two dependent
+   lifecycles (so disabling archive disables the dependent ones too,
+   regardless of their setting):
+   
+   * `BACKUP_LIFECYCLE_PHASE_PROCESS=true` - enables/disables the
+     process phase (e.g., encryption).
+   * `BACKUP_LIFECYCLE_PHASE_COPY=true` - enables/disables the copy
+     phase (e.g., copy to `/archive`).
+   
+ * `BACKUP_LIFECYCLE_PHASE_PRUNE=true` - enables/disables the prune
+   phase. Prune just removes old backups, so it is not dependent on
+   creating a new archive.

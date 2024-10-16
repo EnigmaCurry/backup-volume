@@ -1,4 +1,4 @@
 ARG version=canary
-FROM offen/docker-volume-backup:$version
+FROM enigmacurry/backup-volume:$version
 
 RUN apk add rsync

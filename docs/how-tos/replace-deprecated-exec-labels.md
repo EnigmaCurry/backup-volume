@@ -13,11 +13,11 @@ If you want to emulate the existing behavior, all you need to do is change `exec
 
 ```diff
     labels:
--     - docker-volume-backup.exec-pre=cp -r /var/my_app /tmp/backup/my-app
-+     - docker-volume-backup.archive-pre=cp -r /var/my_app /tmp/backup/my-app
--     - docker-volume-backup.exec-post=rm -rf /tmp/backup/my-app
-+     - docker-volume-backup.archive-post=rm -rf /tmp/backup/my-app
+-     - backup-volume.exec-pre=cp -r /var/my_app /tmp/backup/my-app
++     - backup-volume.archive-pre=cp -r /var/my_app /tmp/backup/my-app
+-     - backup-volume.exec-post=rm -rf /tmp/backup/my-app
++     - backup-volume.archive-post=rm -rf /tmp/backup/my-app
 ```
 
-The `EXEC_LABEL` setting and the `docker-volume-backup.exec-label` label stay as is.
+The `EXEC_LABEL` setting and the `backup-volume.exec-label` label stay as is.
 Check the additional documentation on running commands during the backup lifecycle to find out about further possibilities.

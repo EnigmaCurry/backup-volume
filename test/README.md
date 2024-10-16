@@ -23,7 +23,7 @@ In addition to the match pattern, which can be given as the first positional arg
 
 #### `BUILD_IMAGE`
 
-When set, the test script will build an up-to-date `docker-volume-backup` image from the current state of your source tree, and run the tests against it.
+When set, the test script will build an up-to-date `backup-volume` image from the current state of your source tree, and run the tests against it.
 
 ```sh
 BUILD_IMAGE=1 ./test.sh

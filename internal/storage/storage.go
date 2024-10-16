@@ -6,7 +6,7 @@ package storage
 import (
 	"time"
 
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 )
 
 // Backend is an interface for defining functions which all storage providers support.

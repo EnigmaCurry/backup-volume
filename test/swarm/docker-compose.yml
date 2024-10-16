@@ -17,7 +17,7 @@ services:
       - backup_data:/data
 
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION:-canary}
+    image: enigmacurry/backup-volume:${TEST_VERSION:-canary}
     depends_on:
       - minio
     deploy:
@@ -37,10 +37,10 @@ services:
       - pg_data:/backup/pg_data:ro
       - /var/run/docker.sock:/var/run/docker.sock
 
-  offen:
-    image: offen/offen:latest
+  enigmacurry:
+    image: enigmacurry/enigmacurry:latest
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
     healthcheck:
       disable: true
     deploy:
@@ -53,7 +53,7 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
     volumes:
       - pg_data:/var/lib/postgresql/data
     deploy:

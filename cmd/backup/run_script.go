@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 )
 
 // runScript instantiates a new script object and orchestrates a backup run.
@@ -71,20 +71,29 @@ func runScript(c *Config) (err error) {
 				if err != nil {
 					return
 				}
-				err = s.createArchive()
+				if c.BackupLifecyclePhaseArchive {
+					_ = s.createArchive()
+				}
 				return
 			})(); err != nil {
 				return err
 			}
-
-			if err := s.withLabeledCommands(lifecyclePhaseProcess, s.encryptArchive)(); err != nil {
-				return err
+			if c.BackupLifecyclePhaseArchive {
+				if c.BackupLifecyclePhaseProcess {
+					if err := s.withLabeledCommands(lifecyclePhaseProcess, s.encryptArchive)(); err != nil {
+						return err
+					}
+				}
+				if c.BackupLifecyclePhaseCopy {
+					if err := s.withLabeledCommands(lifecyclePhaseCopy, s.copyArchive)(); err != nil {
+						return err
+					}
+				}
 			}
-			if err := s.withLabeledCommands(lifecyclePhaseCopy, s.copyArchive)(); err != nil {
-				return err
-			}
-			if err := s.withLabeledCommands(lifecyclePhasePrune, s.pruneBackups)(); err != nil {
-				return err
+			if c.BackupLifecyclePhasePrune {
+				if err := s.withLabeledCommands(lifecyclePhasePrune, s.pruneBackups)(); err != nil {
+					return err
+				}
 			}
 			return nil
 		}()

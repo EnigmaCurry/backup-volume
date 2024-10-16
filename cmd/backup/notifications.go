@@ -14,7 +14,7 @@ import (
 	"time"
 
 	sTypes "github.com/containrrr/shoutrrr/pkg/types"
-	"github.com/offen/docker-volume-backup/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
 )
 
 //go:embed notifications.tmpl
@@ -75,7 +75,6 @@ func (s *script) sendNotification(title, body string) error {
 	}
 	return nil
 }
-
 var templateHelpers = template.FuncMap{
 	"formatTime": func(t time.Time) string {
 		return t.Format(time.RFC3339)

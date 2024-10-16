@@ -20,7 +20,7 @@ TMP_DIR=$(mktemp -d)
 echo "1234#\$ecret" | gpg -d --pinentry-mode loopback --yes --passphrase-fd 0 "$LOCAL_DIR/test.tar.gz.gpg" > "$LOCAL_DIR/decrypted.tar.gz"
 tar -xf "$LOCAL_DIR/decrypted.tar.gz" -C $TMP_DIR
 
-if [ ! -f $TMP_DIR/backup/app_data/offen.db ]; then
+if [ ! -f $TMP_DIR/backup/app_data/enigmacurry.db ]; then
   fail "Could not find expected file in untared archive."
 fi
 rm "$LOCAL_DIR/decrypted.tar.gz"

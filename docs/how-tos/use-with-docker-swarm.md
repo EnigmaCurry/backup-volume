@@ -39,7 +39,7 @@ services:
     image: myorg/myimage:latest
     deploy:
       labels:
-        - docker-volume-backup.stop-during-backup=true
+        - backup-volume.stop-during-backup=true
       replicas: 2
 ```
 
@@ -56,7 +56,7 @@ services:
   app:
     image: myapp/myimage:latest
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
     deploy:
       replicas: 2
       restart_policy:
@@ -72,7 +72,7 @@ When running in Swarm mode, it's also advised to set a hard memory limit on your
 ```yml
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     deployment:
       resources:
         limits:

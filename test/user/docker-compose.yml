@@ -5,11 +5,11 @@ services:
     volumes:
       - app_data:/tmp
     labels:
-      - docker-volume-backup.archive-pre.user=testuser
-      - docker-volume-backup.archive-pre=/bin/sh -c 'whoami > /tmp/whoami.txt'
+      - backup-volume.archive-pre.user=testuser
+      - backup-volume.archive-pre=/bin/sh -c 'whoami > /tmp/whoami.txt'
 
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION:-canary}
+    image: enigmacurry/backup-volume:${TEST_VERSION:-canary}
     deploy:
       restart_policy:
         condition: on-failure

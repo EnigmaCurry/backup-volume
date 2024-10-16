@@ -3,7 +3,7 @@
 
 services:
   backup:
-    image: offen/docker-volume-backup:${TEST_VERSION:-canary}
+    image: enigmacurry/backup-volume:${TEST_VERSION:-canary}
     environment:
       BACKUP_FILENAME: test.tar.gz
       BACKUP_CRON_EXPRESSION: 0 0 5 31 2 ?
@@ -28,7 +28,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
 
 volumes:
   pg_data:

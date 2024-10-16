@@ -13,7 +13,7 @@ Instead of mounting `/var/run/docker.sock`, mount the user-specific socket into 
 ```yml
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     # ... configuration omitted
     volumes:
       - backup:/backup:ro

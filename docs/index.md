@@ -4,7 +4,7 @@ layout: home
 nav_order: 1
 ---
 
-# offen/docker-volume-backup
+# enigmacurry/backup-volume
 {:.no_toc}
 
 Backup Docker volumes locally or to any S3, WebDAV, Azure Blob Storage, Dropbox or SSH compatible storage.
@@ -12,13 +12,13 @@ Backup Docker volumes locally or to any S3, WebDAV, Azure Blob Storage, Dropbox 
 
 ---
 
-The [offen/docker-volume-backup](https://hub.docker.com/r/offen/docker-volume-backup) Docker image can be used as a lightweight (below 15MB) companion container to an existing Docker setup.
+The [enigmacurry/backup-volume](https://hub.docker.com/r/enigmacurry/backup-volume) Docker image can be used as a lightweight (below 15MB) companion container to an existing Docker setup.
 It handles __recurring or one-off backups of Docker volumes__ to a __local directory__, __any S3, WebDAV, Azure Blob Storage, Dropbox or SSH compatible storage (or any combination thereof) and rotates away old backups__ if configured. It also supports __encrypting your backups using GPG__ and __sending notifications for (failed) backup runs__.
 
 {: .note }
 Code and documentation for `v1` versions are found on [this branch][v1-branch].
 
-[v1-branch]: https://github.com/offen/docker-volume-backup/tree/v1
+[v1-branch]: https://github.com/enigmacurry/backup-volume/tree/v1
 
 ---
 
@@ -44,14 +44,14 @@ services:
       # This means the container will be stopped during backup to ensure
       # backup integrity. You can omit this label if stopping during backup
       # not required.
-      - docker-volume-backup.stop-during-backup=true
+      - backup-volume.stop-during-backup=true
 
   backup:
     # In production, it is advised to lock your image tag to a proper
     # release version instead of using `latest`.
-    # Check https://github.com/offen/docker-volume-backup/releases
+    # Check https://github.com/enigmacurry/backup-volume/releases
     # for a list of available releases.
-    image: offen/docker-volume-backup:latest
+    image: enigmacurry/backup-volume:latest
     restart: always
     env_file: ./backup.env # see below for configuration reference
     volumes:
@@ -83,7 +83,7 @@ docker run --rm \
   --env AWS_SECRET_ACCESS_KEY="<xxx>" \
   --env AWS_S3_BUCKET_NAME="<xxx>" \
   --entrypoint backup \
-  offen/docker-volume-backup:v2
+  enigmacurry/backup-volume:v2
 ```
 
 Alternatively, pass a `--env-file` in order to use a full config as described below.
@@ -91,11 +91,11 @@ Alternatively, pass a `--env-file` in order to use a full config as described be
 ## Available image registries
 
 This Docker image is published to both Docker Hub and the GitHub container registry.
-Depending on your preferences and needs, you can reference both `offen/docker-volume-backup` as well as `ghcr.io/offen/docker-volume-backup`:
+Depending on your preferences and needs, you can reference both `enigmacurry/backup-volume` as well as `ghcr.io/enigmacurry/backup-volume`:
 
 ```
-docker pull offen/docker-volume-backup:v2
-docker pull ghcr.io/offen/docker-volume-backup:v2
+docker pull enigmacurry/backup-volume:v2
+docker pull ghcr.io/enigmacurry/backup-volume:v2
 ```
 
 Documentation references Docker Hub, but all examples will work using ghcr.io just as well.
@@ -105,9 +105,9 @@ Documentation references Docker Hub, but all examples will work using ghcr.io ju
 This tool is developed and tested against the Docker CE engine exclusively.
 While it may work against different implementations (e.g. Balena Engine), there are no guarantees about support for non-Docker engines.
 
-## Differences to `jareware/docker-volume-backup`
+## Differences to `jareware/backup-volume`
 
-This image is heavily inspired by `jareware/docker-volume-backup`. We decided to publish this image as a simpler and more lightweight alternative because of the following requirements:
+This image is heavily inspired by `jareware/backup-volume`. We decided to publish this image as a simpler and more lightweight alternative because of the following requirements:
 
 - The original image is based on `ubuntu` and requires additional tools, making it heavy.
 This version is roughly 1/25 in compressed size (it's ~15MB).

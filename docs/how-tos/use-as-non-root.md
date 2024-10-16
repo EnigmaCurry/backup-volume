@@ -22,7 +22,7 @@ docker run --rm \
   --env AWS_S3_BUCKET_NAME="<xxx>" \
   --entrypoint backup \
   --user 1000:1000 \
-  offen/docker-volume-backup:v2
+  enigmacurry/backup-volume:v2
 ```
 
 or in a compose file:
@@ -30,7 +30,7 @@ or in a compose file:
 ```yml
 services:
   backup:
-    image: offen/docker-volume-backup:v2
+    image: enigmacurry/backup-volume:v2
     user: 1000:1000
     # further configuration omitted ...
 ```

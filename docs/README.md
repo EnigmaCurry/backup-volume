@@ -1,6 +1,6 @@
 # Documentation site
 
-This directory contains the sources for the documentation site published at <https://offen.github.io/docker-volume-backup>.
+This directory contains the sources for the documentation site published at <https://enigmacurry.github.io/backup-volume>.
 
 Assuming you have Ruby and [`bundler`][bundler] installed, you can run the site locally using the following commands:
 

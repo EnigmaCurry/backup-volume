@@ -15,8 +15,8 @@ import (
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/offen/docker-volume-backup/internal/errwrap"
-	"github.com/offen/docker-volume-backup/internal/storage"
+	"github.com/enigmacurry/backup-volume/internal/errwrap"
+	"github.com/enigmacurry/backup-volume/internal/storage"
 )
 
 type s3Storage struct {
