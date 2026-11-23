@@ -72,7 +72,7 @@ func runScript(c *Config) (err error) {
 					return
 				}
 				if c.BackupLifecyclePhaseArchive {
-					_ = s.createArchive()
+					err = s.createArchive()
 				}
 				return
 			})(); err != nil {
